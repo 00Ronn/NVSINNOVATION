@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>NVSINNOVATION</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
+    body {
+      font-family: 'Anton', sans-serif;
+    }
+  </style>
+</head>
+<body class="bg-[#5a8de0] relative min-h-screen overflow-hidden">
+  <!-- About Us top right -->
+  <div class="absolute top-4 right-4 flex flex-col items-center space-y-1 cursor-pointer select-none" onclick="alert('Developed by NVSINNOVATION – 2025')">
+    <div class="w-12 h-12 rounded-full border-2 border-black flex items-center justify-center">
+      <i class="fas fa-info-circle text-black text-3xl"></i>
+    </div>
+    <span class="text-white text-xs font-extrabold tracking-widest">ABOUT US</span>
+  </div>
+
+  <!-- Bottom row container -->
+  <div class="absolute bottom-12 left-0 right-0 flex flex-wrap justify-center gap-x-16 gap-y-10 px-4">
+    <!-- Button Template -->
+    <div onclick="triggerFeature('live_feed')" class="feature-btn bg-[#a87a2e]">LIVE FEED</div>
+    <div onclick="triggerFeature('binds')" class="feature-btn bg-[#2a5a56] text-[13px] leading-tight">SETUP/UPDATE<br/>BINDS</div>
+    <div onclick="triggerFeature('contacts')" class="feature-btn bg-[#3a4170] text-[13px] leading-tight">SETUP/UPDATE<br/>CONTACTS</div>
+    <div onclick="triggerFeature('logs')" class="feature-btn bg-[#d9d7b3] text-black">LOGS</div>
+    <div onclick="triggerFeature('graphs')" class="feature-btn bg-[#5a33d1] text-[13px] leading-tight">VIEW<br/>GRAPHS</div>
+    <div onclick="window.close()" class="feature-btn bg-[#a34400]">CLOSE</div>
+  </div>
+
+  <!-- Response box -->
+  <div id="response-box" class="absolute top-24 left-1/2 transform -translate-x-1/2 bg-white text-black p-4 rounded shadow-lg hidden max-w-md text-center"></div>
+
+  <script>
+    async function triggerFeature(feature) {
+      const response = await fetch("/feature", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ feature })
+      });
+
+      const data = await response.json();
+      const box = document.getElementById("response-box");
+      box.classList.remove("hidden");
+      box.innerText = data.content || "An error occurred.";
+    }
+  </script>
+
+  <style>
+    .feature-btn {
+      width: 7rem;
+      height: 5rem;
+      border-radius: 0.5rem;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      font-weight: 800;
+      color: white;
+      cursor: pointer;
+      user-select: none;
+    }
+  </style>
+</body>
+</html>
